@@ -9,7 +9,7 @@ public class Main {
   private static List<String> blacklist = new ArrayList<String>();
   public static void main(String[] args) {
     blacklist.add("0");
-    JFrame frame = new JFrame("InputDialog Example #1");
+    JFrame frame = new JFrame("Title");
     while (true) {
       String userNumber;
       try {
@@ -34,7 +34,7 @@ public class Main {
       String secretSentence = JOptionPane.showInputDialog(frame, "What is the secret sentence?");
 
       if (blacklist.contains(userNumber)) {
-        String out = String.format("ACCESS DENIED");
+        String out = "ACCESS DENIED";
         JOptionPane.showMessageDialog(frame, out);
         continue;
       }
@@ -42,7 +42,7 @@ public class Main {
         String out = String.format("Logging in as %s...", userNumber);
         JOptionPane.showMessageDialog(frame, out);
       } else {
-        String out = String.format("ACCESS DENIED");
+        String out = "ACCESS DENIED";
         addToBlacklist(userNumber);
         JOptionPane.showMessageDialog(frame, out);
       }
