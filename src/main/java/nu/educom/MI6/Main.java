@@ -23,11 +23,8 @@ public class Main {
         continue;
       }
       int numLen = userNumber.length();
-      if (numLen > 3) {
-        String out = String.format("Agent number %s is invalid. Try again.", userNumber);
-        JOptionPane.showMessageDialog(frame, out);
-        continue;
-      } else if(1 > Integer.parseInt(userNumber) || 956 < Integer.parseInt(userNumber)) {
+      int parsedUserNumber = Integer.parseInt(userNumber);
+      if (numLen > 3 || 1 > parsedUserNumber || 956 < parsedUserNumber) {
         String out = String.format("Agent number %s is invalid. Try again.", userNumber);
         JOptionPane.showMessageDialog(frame, out);
         continue;
