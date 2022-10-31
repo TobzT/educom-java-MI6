@@ -1,7 +1,7 @@
 package nu.educom.MI6;
 
-import java.lang.reflect.Array;
 import java.util.*;
+import javax.swing.*;
 
 public class Main {
 
@@ -9,40 +9,45 @@ public class Main {
   private static List<String> blacklist = new ArrayList<String>();
   public static void main(String[] args) {
     blacklist.add("0");
+    JFrame frame = new JFrame("InputDialog Example #1");
     while (true) {
-      Scanner sc = new Scanner(System.in);
-      System.out.println("What is your number?");
       String userNumber;
       try {
-        userNumber = Integer.toString(sc.nextInt());
+        userNumber = JOptionPane.showInputDialog(frame, "What is your number?");
+        if (userNumber != null) {
+          Integer.parseInt(userNumber);
+        }
       } catch (Exception e) {
-        System.out.println("You can only enter numbers.");
+        String out = "You can only enter numbers.";
+        JOptionPane.showMessageDialog(frame, out);
         continue;
       }
       int numLen = userNumber.length();
-
       if (numLen > 3) {
-        System.out.println(String.format("Agent number %s is invalid. Try again.", userNumber));
+        String out = String.format("Agent number %s is invalid. Try again.", userNumber);
+        JOptionPane.showMessageDialog(frame, out);
         continue;
       } else if(1 > Integer.parseInt(userNumber) || 956 < Integer.parseInt(userNumber)) {
-        System.out.println(String.format("Agent number %s is invalid. Try again.", userNumber));
+        String out = String.format("Agent number %s is invalid. Try again.", userNumber);
+        JOptionPane.showMessageDialog(frame, out);
         continue;
       }
       userNumber = formatUserNumber(userNumber);
 
-      System.out.println("What is the secret sentence?");
-      Scanner in = new Scanner(System.in);
-      String secretSentence = in.nextLine();
+      String secretSentence = JOptionPane.showInputDialog(frame, "What is the secret sentence?");
 
       if (blacklist.contains(userNumber)) {
-        System.out.println(String.format("Invalid secret sentence... Try again."));
+        String out = String.format("ACCESS DENIED");
+        JOptionPane.showMessageDialog(frame, out);
         continue;
       }
       if(secretSentence.equals(secretSentencePassword)) {
-        System.out.println(String.format("Logging in as %s...", userNumber));
+        String out = String.format("Logging in as %s...", userNumber);
+        JOptionPane.showMessageDialog(frame, out);
       } else {
-        System.out.println(String.format("Invalid secret sentence... Try again."));
+        String out = String.format("ACCESS DENIED");
         addToBlacklist(userNumber);
+        JOptionPane.showMessageDialog(frame, out);
       }
     }
   }
@@ -51,21 +56,16 @@ public class Main {
     int numLen = userNum.length();
     if (numLen < 3){
       int amountOfZeroes = 3 - numLen;
-      userNum = repeat(amountOfZeroes, "0") + userNum;
+      userNum = repeatZeroes(amountOfZeroes) + userNum;
     }
     return userNum;
   }
-
-//  private static List<String> addToBlacklist(List<String> blacklist, String userNum) {
-//    blacklist.add(userNum);
-//    return blacklist;
-//  }
 
   private static void addToBlacklist(String userNum) {
     blacklist.add(userNum);
   }
 
-  private static String repeat(int count, String with) {
-    return new String(new char[count]).replace("\0", with);
+  private static String repeatZeroes(int count) {
+    return new String(new char[count]).replace("\0", "0");
   }
 }
