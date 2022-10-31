@@ -40,7 +40,6 @@ public class Main {
       }
       if(secretSentence.equals(secretSentencePassword)) {
         System.out.println(String.format("Logging in as %s...", userNumber));
-        return;
       } else {
         System.out.println(String.format("Invalid secret sentence... Try again."));
         addToBlacklist(userNumber);
