@@ -76,6 +76,7 @@ public class View {
 
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getRootPane().setDefaultButton(backButton);
         frame.setVisible(true);
     }
     public void displayError(String errMsg) {
@@ -129,6 +130,7 @@ public class View {
         // Settings for the frame
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getRootPane().setDefaultButton(loginButton);
         frame.setVisible(true);
     }
 

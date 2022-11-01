@@ -7,7 +7,6 @@ public class Presenter implements IPresenter {
     private Model model = new Model();
     private String userNumber;
     private String secretSentence;
-    private boolean valid;
 
 
 
@@ -26,14 +25,12 @@ public class Presenter implements IPresenter {
     public void triggerLogin() {
         userNumber = view.getUserNumber();
         secretSentence = view.getSecretSentence();
-        valid = model.validateLogin(userNumber, secretSentence);
-        if(valid) {
+        if(model.validateLogin(userNumber, secretSentence)) {
             String msg = "ACCESS GRANTED";
             view.displaySuccess(msg);
         } else {
             String errMsg = model.getErrors().get("validation");
             view.displayError(errMsg);
-
         }
     }
 
