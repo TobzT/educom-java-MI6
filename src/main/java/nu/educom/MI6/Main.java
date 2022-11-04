@@ -1,18 +1,29 @@
 package nu.educom.MI6;
 
 
-import java.sql.ResultSet;
+import nu.educom.MI6.data.Agent;
+
+import nu.educom.MI6.data.Crud;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
 
   public static void main(String[] args){
     View view = new View();
-    Presenter presenter = new Presenter(view);
-    presenter.displayLogin();
     Crud crud = new Crud();
-    Agent test = crud.readOneRow("SELECT * FROM agents WHERE userNumber = ?", "002");
-    test.read();
+    Presenter presenter = new Presenter(view, crud);
+    presenter.displayLogin();
+//    Crud crud = new Crud();
+//    List<String> agentNumbers = new ArrayList<String>(Arrays.asList("002", "005", "030"));
+////    Agent test = crud.readOneAgentRow("030");
+//    List<Agent> test = crud.readManyAgentRows(agentNumbers);
+//    for (Agent agent : test) {
+//      agent.read();
+//    }
+
 
 
   }

@@ -1,16 +1,21 @@
 package nu.educom.MI6;
 
 
+import nu.educom.MI6.data.Crud;
+
 public class Presenter implements IPresenter {
 
     private View view;
-    private Model model = new Model();
+    private Crud crud;
+    private Model model;
     private String userNumber;
     private String secretSentence;
 
 
 
-    public Presenter(View view) {
+    public Presenter(View view, Crud crud) {
+        this.crud = crud;
+        this.model = new Model(crud);
         this.view = view;
         this.view.setControlInterface(this);
         this.view.setLoginHandler();

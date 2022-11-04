@@ -1,13 +1,18 @@
 package nu.educom.MI6;
 
 
+import nu.educom.MI6.data.Agent;
+import nu.educom.MI6.data.Crud;
+
 import java.util.*;
 
 public class Model {
 
     private IPresenter control;
+
+    private Crud crud;
     private List<String> blacklist = new ArrayList<String>();
-    private String secretSentence = "For ThE Royal QUEEN";
+//    private String secretSentence = "For ThE Royal QUEEN";
 
     private String userNumber;
     private Map<String, String> errors = new HashMap<String, String>();
@@ -17,8 +22,10 @@ public class Model {
     }
 
 
-
-    public boolean validateLogin(String userNum, String secretSentence) {
+    public Model(Crud crud) {
+        this.crud = crud;
+    }
+    public boolean validateLogin(String userNum, String password) {
         try {
             Integer.parseInt(userNum);
         } catch (Exception e) {
@@ -38,8 +45,9 @@ public class Model {
             errors.put("validation", "BLACKLISTED");
             return false;
         }
-
-        if(!secretSentence.equals(this.secretSentence)) {
+        Agent agent = crud.readOneAgentRow(userNumber);
+        String passwordFromDb = agent.getPassword();
+        if(!password.equals(passwordFromDb)) {
             errors.put("validation", "ACCESS DENIED");
             blacklist.add(userNumber);
             return false;
