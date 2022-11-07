@@ -41,4 +41,17 @@ public class Agent {
         System.out.println(String.format("license_to_kill: %s", license_to_kill));
         System.out.println(String.format("license_to_kill_expire: %s \r\n", license_to_kill_expire));
     }
+
+    public String getDetails() {
+        if(!license_to_kill) {
+            return "NO LICENSE TO KILL";
+        } else {
+            String output = String.format("ACTIVE LICENSE TO KILL EXPIRES ON %s", license_to_kill_expire);
+            return output;
+        }
+    }
+
+    public boolean getActive() {
+        return active;
+    }
 }

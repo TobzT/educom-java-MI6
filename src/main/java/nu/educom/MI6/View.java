@@ -43,7 +43,7 @@ public class View {
     public void setBackHandler() {
         backHandler = new BackHandler(control);
     }
-    private void displayText(String errMsg, Color color){
+    public void displayText(String errMsg, Color color){
         frame.getContentPane().removeAll();
         frame.repaint();
 
@@ -86,6 +86,8 @@ public class View {
     public void displaySuccess(String msg) {
         displayText(msg, Color.GREEN);
     }
+
+
     public void displayLogin() {
         frame.getContentPane().removeAll();
         frame.repaint();

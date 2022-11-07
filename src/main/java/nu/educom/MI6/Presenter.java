@@ -1,7 +1,12 @@
 package nu.educom.MI6;
 
 
+import nu.educom.MI6.data.Agent;
 import nu.educom.MI6.data.Crud;
+import nu.educom.MI6.data.LoginAttempt;
+
+import java.awt.*;
+import java.util.List;
 
 public class Presenter implements IPresenter {
 
@@ -31,8 +36,9 @@ public class Presenter implements IPresenter {
         userNumber = view.getUserNumber();
         secretSentence = view.getSecretSentence();
         if(model.validateLogin(userNumber, secretSentence)) {
-            String msg = "ACCESS GRANTED";
-            view.displaySuccess(msg);
+            Agent agent = crud.readOneAgentRow(userNumber);
+            String msg = agent.getDetails();
+            view.displayText(msg, Color.BLACK);
         } else {
             String errMsg = model.getErrors().get("validation");
             view.displayError(errMsg);
@@ -42,6 +48,4 @@ public class Presenter implements IPresenter {
     public void triggerBack() {
         view.displayLogin();
     }
-
-
 }

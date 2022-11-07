@@ -87,6 +87,49 @@ public class Crud {
         return output;
     }
 
+    public void createLoginRow(String userNumber, boolean success) {
+        String sql = "INSERT INTO login (userNumber, success) VALUES (?, ?);";
+        PreparedStatement sqlPrep = null;
+        this.openConn();
+
+        try {
+            sqlPrep = conn.prepareStatement(sql);
+            sqlPrep.setString(1, userNumber);
+            sqlPrep.setBoolean(2, success);
+            sqlPrep.executeUpdate();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public List<LoginAttempt> getLastLoginAttempts(String userNumber) {
+        List<LoginAttempt> output = new ArrayList<LoginAttempt>();
+        String sql = "SELECT * FROM login WHERE userNumber = ? AND id > (SELECT id FROM login WHERE success = true ORDER BY id DESC LIMIT 1) ORDER BY id DESC;";
+        PreparedStatement sqlPrep = null;
+        ResultSet rs = null;
+
+        this.openConn();
+
+        try {
+            sqlPrep = conn.prepareStatement(sql);
+            sqlPrep.setString(1, userNumber);
+            rs = sqlPrep.executeQuery();
+            while(rs.next())
+            {
+                 output.add(new LoginAttempt(rs));
+            }
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return output;
+
+    }
+
+
+
 
 
 

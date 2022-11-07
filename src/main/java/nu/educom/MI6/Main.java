@@ -4,6 +4,7 @@ package nu.educom.MI6;
 import nu.educom.MI6.data.Agent;
 
 import nu.educom.MI6.data.Crud;
+import nu.educom.MI6.data.LoginAttempt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,10 @@ public class Main {
 //    List<Agent> test = crud.readManyAgentRows(agentNumbers);
 //    for (Agent agent : test) {
 //      agent.read();
+//    }
+//    List<LoginAttempt> list = crud.getLastLoginAttempts("007");
+//    for(LoginAttempt item : list) {
+//      item.read();
 //    }
 
 
