@@ -7,4 +7,6 @@ public interface IPresenter {
     void displayLogin();
 
     void triggerBack();
+
+    void setIntervalValue(int secs);
 }

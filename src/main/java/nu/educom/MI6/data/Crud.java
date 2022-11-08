@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Driver;
+
 public class Crud {
 
     private String connString = "jdbc:mysql://127.0.0.1/mi6";

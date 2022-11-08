@@ -7,6 +7,9 @@ import nu.educom.MI6.data.LoginAttempt;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Presenter implements IPresenter {
 
@@ -18,14 +21,15 @@ public class Presenter implements IPresenter {
 
 
 
+
+
     public Presenter(View view, Crud crud) {
         this.crud = crud;
-        this.model = new Model(crud);
+        this.model = new Model(crud, this);
         this.view = view;
         this.view.setControlInterface(this);
         this.view.setLoginHandler();
         this.view.setBackHandler();
-
     }
 
     public void displayLogin() {
@@ -39,13 +43,23 @@ public class Presenter implements IPresenter {
             Agent agent = crud.readOneAgentRow(userNumber);
             String msg = agent.getDetails();
             view.displayText(msg, Color.BLACK);
+
+
+
         } else {
             String errMsg = model.getErrors().get("validation");
             view.displayError(errMsg);
         }
     }
 
+
+
     public void triggerBack() {
         view.displayLogin();
+    }
+
+    public void setIntervalValue(int secs) {
+        view.setIntervalValue(secs);
+        view.startTimer();
     }
 }

@@ -13,22 +13,26 @@ public class Model {
 
     private IPresenter control;
 
-    private Crud crud;
-    private List<String> blacklist = new ArrayList<String>();
+    final Crud crud;
+    private List<String> blacklist = new ArrayList<>();
 //    private String secretSentence = "For ThE Royal QUEEN";
 
     private String userNumber;
-    private Map<String, String> errors = new HashMap<String, String>();
+    final Map<String, String> errors = new HashMap<String, String>();
 
     public Map<String, String> getErrors() {
         return errors;
     }
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
+    public Timer cdt = null;
 
-    public Model(Crud crud) {
+    public Model(Crud crud, IPresenter presenter) {
         this.crud = crud;
+        control = presenter;
     }
+
+
     public boolean validateLogin(String userNum, String password) {
         try {
             Integer.parseInt(userNum);
@@ -57,12 +61,15 @@ public class Model {
             System.out.println(e);
         }
         int size = rows.size();
-        if(size != 0) {
-            potTimeout = (int)Math.pow(2, size) / 2;
+        if (size != 0) {
+            potTimeout = (int)Math.pow(2, size);
+        } else {
+            potTimeout = 1;
         }
 
-        if(!this.validateTime(lastDate, potTimeout)) {
+        if (!this.validateTime(lastDate, potTimeout)) {
             errors.put("validation", "TIMED OUT");
+            control.setIntervalValue(potTimeout * 60);
 //            crud.createLoginRow(userNumber, false);
             return false;
         }
@@ -71,6 +78,11 @@ public class Model {
             return false;
         }
         Agent agent = crud.readOneAgentRow(userNumber);
+        if(agent == null) {
+            errors.put("validation", "ACCESS DENIED");
+            crud.createLoginRow(userNumber, false);
+            return false;
+        }
         String passwordFromDb = agent.getPassword();
         if(!password.equals(passwordFromDb)) {
             errors.put("validation", "ACCESS DENIED");
@@ -101,7 +113,7 @@ public class Model {
   private boolean validateTime(String lastDate,int potTimeout) {
         LocalDateTime now = LocalDateTime.now();
         String currentTime = dtf.format(now);
-        System.out.println(String.format("Potential timeout: %s", potTimeout));
+//        System.out.println(String.format("Potential timeout: %s", potTimeout));
         if(lastDate == null) {
             return true;
         }
@@ -134,8 +146,6 @@ public class Model {
         } else {
             return false;
         }
-
-
         return true;
   }
   private void addToBlacklist(String userNum) {
