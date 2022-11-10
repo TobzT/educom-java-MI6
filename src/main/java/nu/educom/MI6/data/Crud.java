@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.mysql.jdbc.Driver;
 
-public class Crud {
+public class Crud implements ICrud {
 
     private String connString = "jdbc:mysql://127.0.0.1/mi6";
     private String userName = "mi6_user";

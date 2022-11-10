@@ -3,7 +3,7 @@ package nu.educom.MI6.data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Agent {
+public class Agent implements IAgent{
 
     private int id;
     private String userNumber;
